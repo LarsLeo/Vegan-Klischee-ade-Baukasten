@@ -1,16 +1,12 @@
 # frontend
 
-A new Flutter project.
+Das Flutter Frontend der Vegan Klischee Ade app.
 
-## Getting Started
+## How to run
 
-This project is a starting point for a Flutter application.
+Wenn ein Android oder iOS Emulator auf dem Rechner läuft, kann mittels 'flutter run' die Applikation gestartet werden.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Architektur
+main.dart ist der Entry Point der App.
+In ./views sind die einzelnen übergeordneten Komponenten zu finden.
+Jede Komponente kann Unterkomponenten haben. Hierbei ist die generelle Ordnerstruktur: <KomponentenName>/components/<KomponentenName>/...
