@@ -17,26 +17,45 @@ class RecipeDetailComponentModel {
       this._ingredients, this._preparation, this._nutritionValue);
 
   factory RecipeDetailComponentModel.of(RecipeDetailJsonModel jsonModel) {
+    // TODO: Add nutrition values
     List<Widget> tempNutritionValue = [];
-
     var nutritionJson = jsonModel.components["Nährwerte"];
 
     return RecipeDetailComponentModel(
-        Ingredients(_extractMapList(jsonModel.components["Zutaten"])),
-        _extractMapList(jsonModel.components["Zubereitung"]),
+        Ingredients(_extractIngredients(jsonModel.components["Zutaten"])),
+        _extractPreparation(jsonModel.components["Zubereitung"]),
         tempNutritionValue);
   }
 
-  static List<Widget> _extractMapList(ingredientJson) {
+  static List<Widget> _extractIngredients(
+      Map<String, List<String>> ingredientJson) {
     List<Widget> tempWidgets = [];
 
-    ingredientJson.entries.forEach((entry) {
-      tempWidgets.add(ListTile(
-          dense: true,
-          title:
-              Text(entry.key, style: TextStyle(fontWeight: FontWeight.bold))));
-      entry.value.forEach((element) =>
-          tempWidgets.add(ListTile(dense: true, title: Text(element))));
+    ingredientJson.forEach((header, ingredients) {
+      tempWidgets.add(HeaderTile(header));
+
+      ingredients.forEach((ingredient) {
+        var regExp = RegExp(r"([\d\.]+)(.*)");
+        var match = regExp.allMatches(ingredient).elementAt(0);
+        var portions = match.group(1);
+        var ingredientName = match.group(2);
+
+        tempWidgets.add(ItemTile(portions, portions, ingredientName));
+      });
+    });
+
+    return tempWidgets;
+  }
+
+  static List<Widget> _extractPreparation(
+      Map<String, List<String>> preparationJson) {
+    List<Widget> tempWidgets = [];
+
+    preparationJson.forEach((header, preparationSteps) {
+      tempWidgets.add(HeaderTile(header));
+
+      preparationSteps.forEach((preparationStep) =>
+          tempWidgets.add(ListTile(dense: true, title: Text(preparationStep))));
     });
 
     return tempWidgets;
@@ -56,20 +75,38 @@ class Ingredients {
   List<Widget> get ingredients => _ingredients;
 
   static Ingredients of(Ingredients ingredients, int portions) {
-    RegExp regExp = new RegExp(r'([\d\.]+)(.*)');
-
-    List<Widget> newIngredients = ingredients.ingredients.map((ingredient) {
-      var textData = ((ingredient as ListTile).title as Text).data;
-      var matches = regExp.allMatches(textData);
-
-      if (matches.isNotEmpty) {
-        var newValue = double.parse(matches.elementAt(1).toString()) * portions;
-        var newTextData = newValue.toString() + matches.elementAt(2).toString();
-        return ListTile(dense: true, title: Text(newTextData));
-      }
-      return ingredient;
+    List<Widget> oldIngredients = ingredients.ingredients;
+    var newIngredients = oldIngredients.map((ingredient) {
+      if (ingredient is ItemTile) {
+        var initialValue = double.parse(ingredient.initialValue);
+        var currentValue = initialValue + initialValue * (portions - 1);
+        return ItemTile(ingredient.initialValue, currentValue.toString(), ingredient.text);
+      } else
+        return ingredient;
     }).toList();
 
     return Ingredients(newIngredients);
   }
+}
+
+@immutable
+class HeaderTile extends ListTile {
+  HeaderTile(String text)
+      : super(
+            dense: true,
+            title: Text(text, style: TextStyle(fontWeight: FontWeight.bold)));
+}
+
+@immutable
+class ItemTile extends ListTile {
+  final String initialValue;
+  final String currentValue;
+  final String text;
+
+  ItemTile(this.initialValue, this.currentValue, this.text)
+      : super(
+            dense: true,
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [Text(currentValue), Text(text)]));
 }

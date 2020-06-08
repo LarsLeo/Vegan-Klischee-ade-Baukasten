@@ -22,14 +22,36 @@ class AppMain extends StatelessWidget {
 }
 
 class WidgetContainer extends StatefulWidget {
-  WidgetContainer({Key key}) : super(key: key);
+  @override
+  _WidgetContainerState createState() => _WidgetContainerState();
+}
 
-  final Map<int, Widget> _widgetOptions = {
+class _WidgetContainerState extends State<WidgetContainer> {
+  final _WidgetContainerController _controller = _WidgetContainerController();
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: _controller.widgetOptions[_controller.selectedIndex]
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: _controller.bottomNavigationItems,
+          currentIndex: _controller.selectedIndex,
+          onTap: (index) => _controller.onItemTapped(index, this),
+        )
+      )
+    );
+  }
+}
+
+class _WidgetContainerController {
+  final Map<int, Widget> widgetOptions = {
     0: RecipeDetailPage(),
     1: RecipeDetailPage()
   };
 
-  final List<BottomNavigationBarItem> _bottomNavigationItems = [
+  final List<BottomNavigationBarItem> bottomNavigationItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.fastfood),
       title: Text("Rezepte")
@@ -40,32 +62,11 @@ class WidgetContainer extends StatefulWidget {
     )
   ];
 
-  @override
-  _WidgetContainerState createState() => _WidgetContainerState();
-}
+  int selectedIndex = 0;
 
-class _WidgetContainerState extends State<WidgetContainer> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+  void onItemTapped(int index, State state) {
+    state.setState(() {
+      selectedIndex = index;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: widget._widgetOptions[_selectedIndex]
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: widget._bottomNavigationItems,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        )
-      )
-    );
   }
 }

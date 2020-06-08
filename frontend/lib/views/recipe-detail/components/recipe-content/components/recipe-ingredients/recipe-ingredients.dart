@@ -1,37 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/recipe-detail-component-model.dart';
-import 'package:frontend/views/recipe-detail/recipe-detail.dart';
+import 'package:frontend/views/recipe-detail/components/recipe-content/components/recipe-ingredients/recipe-ingredients-controller.dart';
 
 class RecipeIngredients extends StatefulWidget {
   @override
   _RecipeIngredientsState createState() => _RecipeIngredientsState();
 }
 
-class _RecipeIngredientsState extends State<RecipeIngredients> with AutomaticKeepAliveClientMixin{
-  final String _key = "RecipeIngredients";
-
-  int _portions = 1;
-  Ingredients _ingredients;
-
-  void _onDecrementClick() {
-    setState(() {
-      if (_portions > 1) {
-        _portions -= 1;
-      }
-    });
-  }
-
-  void _onIncrementClick() {
-    setState(() {
-      _portions += 1;
-      // _ingredients = Ingredients.of(_ingredients, _portions);
-    });
-  }
+class _RecipeIngredientsState extends State<RecipeIngredients>
+    with AutomaticKeepAliveClientMixin {
+  final RecipeIngredientsController _controller = RecipeIngredientsController();
 
   @mustCallSuper
   @override
   Widget build(BuildContext context) {
-    _ingredients = InheritedRecipeDetail.of(context).component.ingredients;
+    _controller.initializeWidget(context);
 
     return SafeArea(
       top: false,
@@ -39,7 +21,7 @@ class _RecipeIngredientsState extends State<RecipeIngredients> with AutomaticKee
       child: Builder(
         builder: (BuildContext context) {
           return CustomScrollView(
-            key: PageStorageKey<String>(_key),
+            key: PageStorageKey<String>(_controller.key),
             slivers: <Widget>[
               SliverOverlapInjector(
                 handle:
@@ -58,16 +40,15 @@ class _RecipeIngredientsState extends State<RecipeIngredients> with AutomaticKee
                                 children: [
                               IconButton(
                                   icon: Icon(Icons.remove_circle_outline),
-                                  onPressed: _onDecrementClick),
-                              Text("Portionen: " + _portions.toString()),
-                              IconButton(
-                                  icon: Icon(Icons.add_circle_outline),
-                                  onPressed: _onIncrementClick)
+                                  onPressed: () =>_controller.onDecrementClick(this)),
+                              Text("Portionen: " + _controller.portions.toString()),
+                              IconButton( icon: Icon(Icons.add_circle_outline),
+                                  onPressed: () => _controller.onIncrementClick(this))
                             ]));
-                      } else
-                        return _ingredients.ingredients[index - 1];
+                      } else if (index < _controller.ingredients.ingredients.length)
+                        return _controller.ingredients.ingredients[index - 1];
                     },
-                    childCount: _ingredients.ingredients.length + 1,
+                    childCount: _controller.ingredients.ingredients.length + 1,
                   ),
                 ),
               ),
