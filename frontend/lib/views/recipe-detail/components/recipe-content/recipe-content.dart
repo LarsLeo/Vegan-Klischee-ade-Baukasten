@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/recipe-detail/components/recipe-content/components/recipe-nutrition/recipe-nutrition.dart';
 import 'package:frontend/views/recipe-detail/components/recipe-content/components/recipe-preparation.dart';
 
 import 'components/recipe-ingredients/recipe-ingredients.dart';
@@ -14,7 +15,7 @@ class RecipeContent extends StatelessWidget {
   List<Widget> _tabViews = [
     RecipeIngredients(),
     RecipePreparation(),
-    RecipeIngredients()
+    RecipeNutrition()
   ];
 
   @override
@@ -22,7 +23,7 @@ class RecipeContent extends StatelessWidget {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewPortConstraints) {
       return Container(
-          constraints: BoxConstraints(minHeight: 50, maxHeight: 500),
+          constraints: BoxConstraints(minHeight: 200, maxHeight: 500),
           child: DefaultTabController(
             length: _tabs.length,
             child: NestedScrollView(
@@ -37,7 +38,7 @@ class RecipeContent extends StatelessWidget {
                           // TODO: put text from loaded image
                           'Kichererbsen Salat'),
                       pinned: true,
-                      expandedHeight: 150.0,
+                      expandedHeight: 105,
                       forceElevated: innerBoxIsScrolled,
                       bottom: TabBar(
                         tabs: _tabs,

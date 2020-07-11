@@ -28,6 +28,21 @@ class DummyData {
       ],
       "Bananenteil": ["Blah 1", "Blah 2", "Blah 3"]
     },
-    "Nährwerte": {"Selen": "10 mg", "Eisen": "200 kg"}
+    "Nährwerte": {
+      "kcal": "115",
+      "Kohlenhydrate": "20.8",
+      "Fett": "0.5",
+      "Protein": "5.9",
+      "Ballaststoffe": "6.6",
+      "ALA": "0.1",
+      "Lysin": "247",
+      "Kalzium": "100",
+      "Zink": "0.8",
+      "Eisen": "1.7",
+      "B2": "0.2",
+      "RÄ": "0.2",
+      "Jod": "1",
+      "Salz": "0.1"
+    }
   });
 }
