@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "997915889751",
+    "firebase_url": "https://vegan-klischee-ade.firebaseio.com",
+    "project_id": "vegan-klischee-ade",
+    "storage_bucket": "vegan-klischee-ade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997915889751:android:8fb6423fcb9fcd58f5d312",
+        "android_client_info": {
+          "package_name": "com.greemony.veganklischeeade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997915889751-ogoe2r80ekhlp0nhrvvf6j7ef2vmlafv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greemony.veganklischeeade",
+            "certificate_hash": "2ff6342a0b6d5d22b4c33c1ba9380939cb6151fe"
+          }
+        },
+        {
+          "client_id": "997915889751-s1vkfd9m8c9m38emhc1ap2a70jtp3po5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdDDM1wP49CsTgNoatPU6EEoWgplcn0N4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997915889751-s1vkfd9m8c9m38emhc1ap2a70jtp3po5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

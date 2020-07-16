@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/shared_components/enums.dart';
 import 'package:frontend/shared_components/nutrition-mapping.dart';
 
+// TODO: All of this is service logic
+
 @immutable
 class RecipeDetailJsonModel {
   final components;

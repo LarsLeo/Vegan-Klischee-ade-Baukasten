@@ -6,6 +6,7 @@ import 'components/recipe-content/recipe-content.dart';
 import 'components/recipe-header.dart';
 import 'components/recipe-picture.dart';
 
+//TODO: Use provider?
 class RecipeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
